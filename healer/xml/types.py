@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 from enum import Enum
+from .errors import ErrorType
 
 
 class FixType(Enum):
@@ -14,12 +15,12 @@ class TokenType(Enum):
     OPEN_TAG = "open"
     CLOSE_TAG = "close"
 
-
 @dataclass
 class FixChange:
-    type: FixType
+    type: str
     value: str
-
+    error_type: ErrorType
+    severity: float = 0.1
 
 @dataclass
 class HealResult:
@@ -27,8 +28,7 @@ class HealResult:
     confidence: float
     changes: List[FixChange]
 
-
 @dataclass
 class Token:
-    type: TokenType
+    type: str
     value: str
