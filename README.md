@@ -37,3 +37,11 @@ print(result.changes)
 }
 
 ```
+🧠 Motivation
+
+XML is still widely used in legacy systems and often breaks pipelines due to malformed data.
+This library aims to automatically repair common issues.
+
+📜 License
+
+MIT
