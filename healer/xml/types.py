@@ -9,6 +9,12 @@ class FixType(Enum):
     FIXED_TEXT = "fixed_text"
 
 
+class TokenType(Enum):
+    TEXT = "text"
+    OPEN_TAG = "open"
+    CLOSE_TAG = "close"
+
+
 @dataclass
 class FixChange:
     type: FixType
@@ -20,3 +26,9 @@ class HealResult:
     fixed_xml: str
     confidence: float
     changes: List[FixChange]
+
+
+@dataclass
+class Token:
+    type: TokenType
+    value: str
