@@ -7,8 +7,12 @@
       "request": "launch",
       "module": "pytest",
       "args": [
-        "healer/tests"
+        "tests"
       ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
       "justMyCode": true
     }
   ]
