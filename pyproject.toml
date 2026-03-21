@@ -1,14 +1,20 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "xml-healer"
 version = "0.1.0"
-description = "Auto-healing tool for broken XML"
-authors = [{name = "Jakub Mišovský"}]
-dependencies = ["lxml"]
+description = "A tool for healing and diffing broken XML."
+authors = [
+    { name="Jakub Mišovský", email="jakub.misovsky@gmail.com" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "lxml",
+]
 
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
+[tool.setuptools.packages.find]
+where = ["healer"]

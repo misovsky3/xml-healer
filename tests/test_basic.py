@@ -1,3 +1,5 @@
+from healer.xml.parser import tokenize
+
 from healer.xml import heal_xml
 from healer.xml.classifier import classify
 from healer.xml.errors import ErrorType
@@ -89,27 +91,81 @@ def test_healer_integration():
     assert len(result.changes) > 0
 
 
-
-def test_realistic_xml():
-    xml = '''
-    <?xml version="1.0" encoding="UTF-8"?>
-    <root>
-    <osoba id="1">
-        <meno>Peter</meno>
-        <priezvisko>Hruška</priezvisko>
-        <vek>28
-    </osoba>
-
-    <osoba id="2">
-        <meno>Anna</meno>
-        <pozicia><b>Programátorka</pozicia></b>
-        <firma meno="Mesto & Les">
-    </osoba>
-
-    <osoba id=3,>
-        <meno>Lucia</meno>
-    </osoba>
-    '''
+def test_single_root():
+    xml = "<a><b></b></a>"
     result = heal_xml(xml)
 
-    assert True
+    assert result.fixed_xml.startswith("<a>")
+
+
+def test_multiple_roots():
+    xml = "<a></a><b></b>"
+    result = heal_xml(xml)
+
+    assert result.fixed_xml.startswith("<root>")
+
+
+def test_text_only():
+    xml = "hello world"
+    result = heal_xml(xml)
+
+    assert "<root>" in result.fixed_xml
+
+def test_attributes_preserved():
+    xml = '<a id="123" class="x"></a>'
+    result = heal_xml(xml)
+
+    assert 'id="123"' in result.fixed_xml
+    assert 'class="x"' in result.fixed_xml
+
+
+def test_namespace_tag():
+    xml = '<ns:tag></ns:tag>'
+    result = heal_xml(xml)
+
+    assert '<ns:tag>' in result.fixed_xml
+
+
+def test_broken_with_attrs():
+    xml = '<a id="1"><b class="x"></a>'
+    result = heal_xml(xml)
+
+    assert result.fixed_xml.count("<a") == result.fixed_xml.count("</a>")
+
+
+def test_comment():
+    xml = "<a><!-- hello --></a>"
+    result = heal_xml(xml)
+
+    assert "<!-- hello -->" in result.fixed_xml
+
+
+def test_cdata():
+    xml = "<a><![CDATA[ <b>text</b> ]]></a>"
+    result = heal_xml(xml)
+
+    assert "<![CDATA[" in result.fixed_xml
+
+
+def test_processing_instruction():
+    xml = '<?xml-stylesheet type="text/xsl"?><a></a>'
+    result = heal_xml(xml)
+
+    tokens = tokenize(xml)
+    print(tokens)
+
+
+    assert "<?xml-stylesheet" in result.fixed_xml
+
+
+def test_diff_detects_change():
+    xml = "<a><b></a>"
+    result = heal_xml(xml)
+
+    assert len(result.diff) > 0
+
+
+def test_diff_tag_change():
+    xml = "<a><Name>John</NAme>"
+    result = heal_xml(xml)
+    assert any(c.type == "tag_change" for c in result.diff)

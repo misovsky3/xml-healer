@@ -1,47 +1,33 @@
-# XML Healer 🛠️
+# xml-healer
 
-Auto-healing tool for broken XML data.
+A Python tool for healing and diffing broken XML. Automatically fixes common XML errors and provides a diff of changes.
 
-## ✨ Features
-- Fix encoding issues (latin1 → utf-8)
-- Close unclosed tags
-- Wrap stray text into valid XML
-- Provide detailed change log
+## Features
+- Repairs broken or malformed XML
+- Detects and reports tag mismatches, missing/extra tags, and text changes
+- Provides a diff of all structural and tag changes
+- Easy to use API
 
-## 🚀 Installation
-```bash
+## Usage
+```python
+from healer.xml import heal_xml
+
+xml = "<a><Name>John</NAme>"
+result = heal_xml(xml)
+print(result.fixed_xml)
+print(result.diff)
+```
+
+## Installation
+```sh
 pip install xml-healer
 ```
 
-## 🧪 Usage
-
-``` python
-from healer import heal_xml
-
-xml = "<root><item>1<item></root>"
-
-result = heal_xml(xml)
-
-print(result.fixed_xml)
-print(result.changes)
+## Testing
+Run all tests with:
+```sh
+pytest
 ```
 
-## 📌 Example Output
-
-``` json
-{
-  "fixed_xml": "<root><item>1</item></root>",
-  "changes": [
-    "closed unclosed tag <item>"
-  ]
-}
-
-```
-🧠 Motivation
-
-XML is still widely used in legacy systems and often breaks pipelines due to malformed data.
-This library aims to automatically repair common issues.
-
-📜 License
-
+## License
 MIT

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List
 from enum import Enum
 from .errors import ErrorType
+from .diff_types import ASTChange
 
 
 class FixType(Enum):
@@ -27,6 +28,7 @@ class HealResult:
     fixed_xml: str
     confidence: float
     changes: List[FixChange]
+    diff: List[ASTChange]
 
 @dataclass
 class Token:
