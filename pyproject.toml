@@ -16,5 +16,8 @@ dependencies = [
     "lxml",
 ]
 
+[project.scripts]
+xml-healer = "healer.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["healer"]
