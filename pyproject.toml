@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xml-healer"
-version = "0.1.0"
+version = "1.2.3"
 description = "A tool for healing and diffing broken XML."
 authors = [
     { name="Jakub Mišovský", email="jakub.misovsky@gmail.com" }
