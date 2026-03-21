@@ -9,7 +9,7 @@ description = "A tool for healing and diffing broken XML."
 authors = [
     { name="Jakub Mišovský", email="jakub.misovsky@gmail.com" }
 ]
-license = { file = "LICENSE" }
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
