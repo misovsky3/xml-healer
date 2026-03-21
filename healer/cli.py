@@ -2,7 +2,6 @@ import argparse
 from healer.xml import heal_xml
 
 def main():
-    print("[DEBUG] CLI main() called")
     parser = argparse.ArgumentParser(description="XML Healer CLI")
     parser.add_argument(
         "input",
@@ -14,7 +13,6 @@ def main():
         help="Treat input as file path"
     )
     args = parser.parse_args()
-    print(f"[DEBUG] args: {args}")
     if args.file:
         with open(args.input, "r", encoding="utf-8") as f:
             xml = f.read()
